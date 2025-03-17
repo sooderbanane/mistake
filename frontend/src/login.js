@@ -2,13 +2,15 @@ import { useState } from 'react';
 
 function Login() {
     const [formdata, setFormdata] = useState({
-        username: '',
-        email: '',
-        password: ''
+        userName: 'a',
+        userEmail: 'b@c',
+        userPassword: 'd'
     });
 
     const [isRegister, setIsRegister] = useState(false);
     const handleChange = (e) => {
+	console.log(`handleChange: ${e.target.name} => ${e.target.value}`);
+	console.log("handleChange: old formdata: " + JSON.stringify(formdata));
         setFormdata({
             ...formdata,
             [e.target.name]: e.target.value
@@ -17,7 +19,7 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const url = isRegister ? 'http://localhost:5000/api/users' : 'http://localhost:5000/api/auth/login';
+        const url = isRegister ? '/api/users' : '/api/auth/login';
 
         try {
             const response = await fetch(url, {
@@ -49,16 +51,16 @@ function Login() {
                 {isRegister && (
                     <div>
                         <label>Username</label>
-                        <input type="text" name="username" value={formdata.username} onChange={handleChange} required />
+                        <input type="text" name="userName" value={formdata.userName} onChange={handleChange} required />
                     </div>
                 )}
                 <div>
                     <label>Email</label>
-                    <input type="email" name="email" value={formdata.email} onChange={handleChange} required/>
+                    <input type="email" name="userEmail" value={formdata.userEmail} onChange={handleChange} required/>
                 </div>
                 <div>
                     <label>Password</label>
-                    <input type="password" name="password" value={formdata.password} onChange={handleChange} required/>
+                    <input type="password" name="userPassword" value={formdata.userPassword} onChange={handleChange} required/>
                 </div>
                 <button type="submit">{isRegister ? 'Register' : 'Login'}</button>
 
